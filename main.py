@@ -22,24 +22,33 @@ whole_numbers = {
 }
 
 
-def number_to_text_somali(number):
+def convert_num_in_text(number):
     if number < 0 or number > 1000000:
         return "ma ugu talagalin number 1 million ka badan ama la eg"
 
     if number in whole_numbers:
         return f"{whole_numbers[number]}"
     elif number < 100:
-        taban = number // 10 * 10
+        tens = number // 10 * 10
         ones = number % 10
-        return f"{whole_numbers[taban]} iyo {whole_numbers[ones]}"
+        if ones == 0:
+            return f"{whole_numbers[tens]}"
+        else:
+            return f"{whole_numbers[tens]} iyo {whole_numbers[ones]}"
     elif number < 1000:
         boqol = number // 100
         hare = number % 100
-        return f"{whole_numbers[boqol]} boqol iyo {number_to_text_somali(hare)}"
+        if hare == 0:
+            return f"{whole_numbers[boqol]} boqol"
+        else:
+            return f"{whole_numbers[boqol]} boqol iyo {convert_num_in_text(hare)}"
     elif number < 1000000:
         kun = number // 1000 # 1
         hare = number % 1000 # 927
-        return f"{number_to_text_somali(kun)} kun {number_to_text_somali(hare)}"
+        if hare == 0:
+            return f"{whole_numbers[kun]} kun"
+        else:
+            return f"{whole_numbers[kun]} kun iyo {convert_num_in_text(hare)}"
 
 
-print(number_to_text_somali(19652))
+print(convert_num_in_text(400))
